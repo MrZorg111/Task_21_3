@@ -1,34 +1,37 @@
 #include <iostream>
+#include <cmath>
 
 
 struct math_vector {
-    int x = 1;
-    int y = 7;
+    float x = 1;
+    float y = 7;
 }mv;
 struct sec_vector {
-    int x;
-    int y;
+    float x = 0;
+    float y = 0;
 }sv;
-void add(int a, int b, int c, int d){
+void add(float& a, float& b, float& c, float& d){
     a += c;
     b += d;
 }
-void subtract(int a, int b, int c, int d) {
+void subtract(float& a, float& b, float& c, float& d) {
     a -= c;
     b -= d;
 }
-void scale(int a, int b, int s) {
+void scale(float& a, float& b, float s) {
     a *= s;
     b *= s;
 }
-void length() {
 
-}
-void normalize() {
-
+void normalize(float& a, float& b) {
+    float tempo;
+    tempo = hypotf(a, b);
+    a = a / tempo;
+    b = b / tempo;
 }
 int main() {
     math_vector vector;
+    sec_vector s_vector;
     std::string command;
     std::cout << "Enter command:(add, subtract, scale, length, normalize)";
     std::cin >> command;
@@ -48,14 +51,19 @@ int main() {
         int scalar;
         std::cout << "Enter a scalar number:";
         std::cin >> scalar;
-        scale(mv.x, mv.y, scalar);
+        scale(mv.x, mv.y, (float)scalar);
         std::cout << "The result of multiplying a vector by a scalar: " << mv.x << "and" << mv.y << "\n";
     }
     else if (command == "length") {
-
+        std::cout << "Enter the coordinates of the vector whose length you want to find out:";
+        std::cin >> sv.x >> sv.y;
+        std::cout << "Vector length " << hypotf(sv.x, sv.y);
     }
     else if (command == "normalize") {
-
+        std::cout << "Enter the coordinates of the vector to normalize:";
+        std::cin >> sv.x >> sv.y;
+        normalize(sv.x, sv.y);
+        std::cout << "Coordinates of the normalized vector: " << sv.x << " " << sv.y;
     }
     else {
         std::cout << "invalid command!";
